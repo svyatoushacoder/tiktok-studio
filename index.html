@@ -14,139 +14,254 @@
     font-family: 'Segoe UI', Arial, sans-serif;
   }
 
-  .tg-widget {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: #0a0a0a;
-    border-radius: 18px;
-    padding: 16px 26px;
+  .widget {
+    width: fit-content;
+    min-width: 300px;
     position: relative;
-    border: 2px solid #FFD700;
-    animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, glowPulse 3s ease-in-out infinite;
-    overflow: hidden;
+    animation: slideUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
   }
 
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(40px) scale(0.85); }
+    from { opacity: 0; transform: translateY(30px) scale(0.92); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  @keyframes glowPulse {
-    0%, 100% {
-      border-color: #FFD700;
-      box-shadow: 0 0 10px #FFD700, 0 0 30px #FFD70088, 0 0 60px #FFD70033;
-    }
-    50% {
-      border-color: #FFF200;
-      box-shadow: 0 0 20px #FFF200, 0 0 60px #FFD700bb, 0 0 100px #FFD70066;
-    }
-  }
-
-  .shine {
-    position: absolute;
-    top: 0; left: -100%;
-    width: 60%; height: 100%;
-    background: linear-gradient(120deg, transparent 0%, rgba(255,215,0,0.15) 50%, transparent 100%);
-    animation: shineSweep 3s ease-in-out infinite;
-  }
-
-  @keyframes shineSweep {
-    0%        { left: -100%; }
-    40%, 100% { left: 160%; }
-  }
-
-  .tg-icon-wrap {
-    width: 50px; height: 50px;
-    background: #229ED9;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    border: 2px solid #FFD700;
-    box-shadow: 0 0 14px #FFD70088;
-    animation: iconSpin 6s ease-in-out infinite;
-    z-index: 1;
-  }
-
-  @keyframes iconSpin {
-    0%   { transform: rotate(0deg) scale(1); }
-    10%  { transform: rotate(-10deg) scale(1.1); }
-    20%  { transform: rotate(10deg) scale(1.15); }
-    30%  { transform: rotate(0deg) scale(1); }
-    100% { transform: rotate(0deg) scale(1); }
-  }
-
-  .tg-icon-wrap svg { width: 26px; height: 26px; }
-
-  .tg-text { display: flex; flex-direction: column; gap: 5px; z-index: 1; }
-
-  .tg-label {
-    font-size: 12px;
-    color: #FFD700;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    animation: labelFlash 3s ease-in-out infinite;
-  }
-
-  @keyframes labelFlash {
-    0%, 80%, 100% { opacity: 1; text-shadow: 0 0 8px #FFD700; }
-    90%           { opacity: 0.4; text-shadow: none; }
-  }
-
-  .tg-username {
-    font-size: 20px;
-    font-weight: 800;
-    color: #ffffff;
-    text-shadow: 0 0 12px #FFD70066;
-    animation: textScale 3s ease-in-out infinite;
-  }
-
-  @keyframes textScale {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.03); }
-  }
-
-  .particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
-  .p {
-    position: absolute;
-    width: 3px; height: 3px;
-    border-radius: 50%;
+  .hud-top {
     background: #FFD700;
-    animation: floatUp linear infinite;
-    opacity: 0;
+    padding: 7px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+    animation: topPulse 3s ease-in-out infinite;
   }
-  .p:nth-child(1) { left: 10%; animation-duration: 2.5s; animation-delay: 0s; }
-  .p:nth-child(2) { left: 25%; animation-duration: 3.1s; animation-delay: 0.5s; width:2px; height:2px; }
-  .p:nth-child(3) { left: 40%; animation-duration: 2.2s; animation-delay: 1s; }
-  .p:nth-child(4) { left: 60%; animation-duration: 3.4s; animation-delay: 0.2s; width:2px; height:2px; }
-  .p:nth-child(5) { left: 75%; animation-duration: 2.8s; animation-delay: 0.8s; }
-  .p:nth-child(6) { left: 88%; animation-duration: 2.0s; animation-delay: 1.3s; width:2px; height:2px; }
 
+  @keyframes topPulse {
+    0%, 100% { background: #FFD700; }
+    50%       { background: #fff200; }
+  }
+
+  .hud-top-left {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .hud-live-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #000;
+    animation: liveBlink 1.2s step-end infinite;
+    flex-shrink: 0;
+  }
+  @keyframes liveBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hud-title {
+    font-size: 11px; font-weight: 900; color: #000;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .hud-counter {
+    font-size: 10px; font-weight: 900; color: #000;
+    opacity: 0.6; letter-spacing: 1px;
+  }
+
+  .hud-body {
+    background: #0a0a0a;
+    border: 2px solid #FFD700;
+    border-top: none;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hud-shine {
+    position: absolute; top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,215,0,0.08), transparent);
+    animation: shine 3.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes shine { 0%,100%{left:-100%} 50%{left:160%} }
+
+  .slides-container {
+    position: relative;
+    height: 58px;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  .slide-icon {
+    font-size: 22px; flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(255,215,0,0.6));
+  }
+
+  .slide-text { display: flex; flex-direction: column; gap: 2px; }
+
+  .slide-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #FFD700;
+    text-shadow: 0 0 8px #FFD70088;
+  }
+
+  .slide-value {
+    font-size: 18px; font-weight: 900; color: #fff;
+    letter-spacing: 0.3px;
+    text-shadow: 0 0 10px rgba(255,215,0,0.3);
+  }
+
+  .hud-footer {
+    background: #111;
+    border: 2px solid #FFD700;
+    border-top: 1px solid #222;
+    padding: 5px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .hud-dots {
+    display: flex; gap: 5px; align-items: center;
+  }
+
+  .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #333; transition: background 0.3s, transform 0.3s;
+  }
+  .dot.active { background: #FFD700; transform: scale(1.3); }
+
+  .hud-progress {
+    height: 2px; background: #222; flex: 1; margin-left: 12px; border-radius: 2px; overflow: hidden;
+  }
+  .hud-progress-bar {
+    height: 100%; background: #FFD700; width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  .hud-corner-br {
+    position: absolute; bottom: -2px; right: -2px;
+    width: 0; height: 0;
+    border-left: 16px solid transparent;
+    border-bottom: 16px solid #FFD700;
+  }
+  .hud-corner-tl {
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 0;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #FFD700;
+  }
+
+  .particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+  .p { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #FFD700; opacity: 0; animation: floatUp linear infinite; }
+  .p:nth-child(1) { left:8%;  animation-duration:2.5s; animation-delay:0s; }
+  .p:nth-child(2) { left:22%; animation-duration:3.1s; animation-delay:0.6s; }
+  .p:nth-child(3) { left:45%; animation-duration:2.3s; animation-delay:1.1s; }
+  .p:nth-child(4) { left:65%; animation-duration:3.4s; animation-delay:0.3s; }
+  .p:nth-child(5) { left:82%; animation-duration:2.7s; animation-delay:0.9s; }
   @keyframes floatUp {
-    0%   { bottom: -5px; opacity: 0; }
-    20%  { opacity: 0.9; }
-    80%  { opacity: 0.4; }
-    100% { bottom: 105%; opacity: 0; }
+    0%   { bottom:-4px; opacity:0; }
+    20%  { opacity:0.8; }
+    80%  { opacity:0.3; }
+    100% { bottom:100%; opacity:0; }
   }
 </style>
 </head>
 <body>
-<div class="tg-widget">
-  <div class="particles">
-    <div class="p"></div><div class="p"></div><div class="p"></div>
-    <div class="p"></div><div class="p"></div><div class="p"></div>
+<div class="widget">
+  <div class="hud-top">
+    <div class="hud-top-left">
+      <div class="hud-live-dot"></div>
+      <span class="hud-title">🏆 Brawl Cup — Турниры</span>
+    </div>
+    <span class="hud-counter" id="slideCounter">1 / 4</span>
   </div>
-  <div class="shine"></div>
-  <div class="tg-icon-wrap">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21.8 2.3L1.3 10.2c-1.3.5-1.3 1.4-.2 1.7l5.1 1.6 11.8-7.4c.6-.4 1.1-.2.7.2L8.5 15.6v2.6l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22.9 3.4c.3-1.3-.5-1.9-1.1-1.1z" fill="white"/>
-    </svg>
+
+  <div class="hud-body">
+    <div class="hud-corner-tl"></div>
+    <div class="hud-shine"></div>
+    <div class="particles">
+      <div class="p"></div><div class="p"></div><div class="p"></div>
+      <div class="p"></div><div class="p"></div>
+    </div>
+    <div class="slides-container" id="slidesWrap"></div>
+    <div class="hud-corner-br"></div>
   </div>
-  <div class="tg-text">
-    <span class="tg-label">🏆 Турниры тут!</span>
-    <span class="tg-username">t.me/BrawlCUP_lig</span>
+
+  <div class="hud-footer">
+    <div class="hud-dots" id="dots"></div>
+    <div class="hud-progress"><div class="hud-progress-bar" id="progressBar"></div></div>
   </div>
 </div>
+
+<script>
+  const slides = [
+    { icon: '✈️', label: 'Ссылка на канал', value: 't.me/BrawlCUP_lig' },
+    { icon: '⭐', label: 'Отзывы',           value: '50+ довольных игроков' },
+    { icon: '⚡', label: 'Выплаты',          value: 'Мгновенные выплаты' },
+    { icon: '🤝', label: 'Доверие',          value: 'Ваше доверие — наш приоритет' },
+  ];
+
+  const wrap = document.getElementById('slidesWrap');
+  const dotsEl = document.getElementById('dots');
+  const counterEl = document.getElementById('slideCounter');
+  const bar = document.getElementById('progressBar');
+
+  slides.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'slide' + (i === 0 ? ' active' : '');
+    el.innerHTML = `<span class="slide-icon">${s.icon}</span><div class="slide-text"><span class="slide-label">${s.label}</span><span class="slide-value">${s.value}</span></div>`;
+    wrap.appendChild(el);
+
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(dot);
+  });
+
+  const els = wrap.querySelectorAll('.slide');
+  const dots = dotsEl.querySelectorAll('.dot');
+
+  let current = 0;
+  const DURATION = 4000;
+  let startTime = null;
+
+  function tick(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    const pct = Math.min((elapsed / DURATION) * 100, 100);
+    bar.style.width = pct + '%';
+    if (elapsed >= DURATION) { nextSlide(); startTime = ts; }
+    requestAnimationFrame(tick);
+  }
+
+  function nextSlide() {
+    els[current].classList.remove('active');
+    els[current].classList.add('exit');
+    dots[current].classList.remove('active');
+    const prev = current;
+    current = (current + 1) % slides.length;
+    setTimeout(() => els[prev].classList.remove('exit'), 450);
+    els[current].classList.add('active');
+    dots[current].classList.add('active');
+    counterEl.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  requestAnimationFrame(tick);
+</script>
 </body>
 </html>
